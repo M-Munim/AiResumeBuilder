@@ -1,8 +1,11 @@
+import { SignIn } from '@clerk/clerk-react'
 import React from 'react'
 
 const index = () => {
   return (
-    <div>Sign in</div>
+    <div>
+      <SignIn />
+    </div>
   )
 }
 
