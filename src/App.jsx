@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from './components/ui/button'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
+import Header from './components/ui/custom/Header'
 
 const App = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -11,6 +12,7 @@ const App = () => {
   }
   return (
     <>
+      <Header />
       <Outlet />
     </>
   )
