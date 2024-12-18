@@ -13,12 +13,14 @@ import { Button } from '@/components/ui/button'
 import { v4 as uuidv4 } from "uuid"
 import { useUser } from '@clerk/clerk-react'
 import GlobalApi from './../../../service/GlobalApi'
+import { useNavigate } from 'react-router-dom'
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState();
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const navigation = useNavigate()
 
   // const onCreate = async () => {
   //   setLoading(true);
@@ -59,18 +61,19 @@ const AddResume = () => {
     const payload = {
       data: {
         title: resumeTitle,
-        resumeid: uuid,
+        resumeId: uuid,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         userName: user?.fullName,
       },
     };
 
-    console.log("Payload:", payload);
+    // console.log("Payload:", payload);
 
     try {
       const response = await GlobalApi.CreateNewResume(payload);
       console.log("Response:", response.data);
       setLoading(false);
+      navigation('/dashboard/resume/' + response.data.data.documentId + "/edit")
       setOpenDialog(false); // Close dialog on success
     } catch (error) {
       console.error("Error Response:", error.response?.data || error.message);
